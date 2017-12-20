@@ -43,11 +43,11 @@ namespace FillShape
         private void frmMain_MouseClick(object sender, MouseEventArgs e)
         {
             //get cell clicked
-            int col = e.Y / grid.getCellSize();
-            int row = (e.X - 30) / grid.getCellSize();
+            int col = (e.Y - 30) / grid.getCellSize();
+            int row = e.X / grid.getCellSize();
             
             //fill shape if within shape or fill outside
-            FillShape(row, col);
+            FillShape(col, row);
             //set up the grid cell components to display colour accordingly
             ConfigureGrid();
             //refesh to call OnPaint 
@@ -132,12 +132,12 @@ namespace FillShape
             if (r < 0 || c < 0 || r >= MapRows || c >= MapColumns) return;
 
             //check if at the edge of the shape
-            if (grid.getCell(r,c).getBackColor() == Color.Black) return;
+            if (shape[r,c] == 'T') return;
 
             //if you are here, you are still within the bounds of the shape
-            if (grid.getCell(r, c).getBackColor() == Color.White)
+            if (shape[r,c] == '.')
             {
-                grid.getCell(r, c).setBackColor(fillColor);
+                shape[r,c] = 'F';
 
                 //move in all directions to find the endpoint.
 
